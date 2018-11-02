@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FirebasePlayground1</string>
+    <string name="facebook_app_id">949304445270084</string>
+    <string name="fb_login_protocol_scheme">fb949304445270084</string>
+</resources>

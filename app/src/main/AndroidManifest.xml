@@ -25,6 +25,7 @@
         <activity android:name=".testActivity"></activity>
         <activity android:name=".usrGetP"></activity>
         <activity android:name=".usrStorage"></activity>
+        <activity android:name=".usrUpdate"></activity>
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"

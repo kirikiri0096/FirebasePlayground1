@@ -9,7 +9,7 @@ import android.widget.RadioButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     
-    private RadioButton usrDB, usrAuth, usrRegEmail, usrRegGoo, usrRegFace, sysEtc, usrPictureUpload;
+    private RadioButton usrDB, usrAuth, usrRegEmail, usrRegGoo, usrRegFace, sysEtc, usrPictureUpload, usrUpdateProf;
     private Button goBtn;
 
     @Override
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         usrRegFace = (RadioButton) findViewById(R.id.usrRegFacebook);
         sysEtc = (RadioButton) findViewById(R.id.etcBut);
         usrPictureUpload = (RadioButton) findViewById(R.id.usrPictureUpload);
+        usrUpdateProf = (RadioButton) findViewById(R.id.usrUpdateProf);
         
         goBtn = (Button) findViewById(R.id.startDebugButt);
         goBtn.setOnClickListener(this);
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(usrPictureUpload.isChecked()) {
             intent = new Intent(this, usrStorage.class);
+        }
+        if(usrUpdateProf.isChecked()) {
+            intent = new Intent(this, usrUpdate.class);
         }
         switch (v.getId()) {
             case R.id.startDebugButt:

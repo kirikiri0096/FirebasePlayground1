@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -19,7 +17,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/fName"
+                android:id="@+id/upfName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -31,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/fnamevalue"
+                android:id="@+id/upfnamevalue"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -42,10 +40,10 @@
                 android:inputType="textPersonName"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fName" />
+                app:layout_constraintTop_toBottomOf="@+id/upfName" />
 
             <TextView
-                android:id="@+id/lName"
+                android:id="@+id/uplName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -53,10 +51,10 @@
                 android:text="Lastname"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fnamevalue" />
+                app:layout_constraintTop_toBottomOf="@+id/upfnamevalue" />
 
             <EditText
-                android:id="@+id/lnamevalue"
+                android:id="@+id/uplnamevalue"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -67,10 +65,10 @@
                 android:inputType="textPersonName"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lName" />
+                app:layout_constraintTop_toBottomOf="@+id/uplName" />
 
             <TextView
-                android:id="@+id/sso"
+                android:id="@+id/upSSO"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -78,23 +76,25 @@
                 android:text="SSO"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lnamevalue" />
+                app:layout_constraintTop_toBottomOf="@+id/uplnamevalue" />
 
             <EditText
-                android:id="@+id/ssovalue"
+                android:id="@+id/upSSOValue"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:hint="x-xxxx-xxxxx-xx-x"
                 android:inputType="number"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sso" />
+                app:layout_constraintTop_toBottomOf="@+id/upSSO" />
+
 
             <TextView
-                android:id="@+id/addressT"
+                android:id="@+id/upAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -102,10 +102,10 @@
                 android:text="Address"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ssovalue" />
+                app:layout_constraintTop_toBottomOf="@+id/upSSOValue" />
 
             <EditText
-                android:id="@+id/addressvalue"
+                android:id="@+id/upAddressvalue"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -116,45 +116,120 @@
                 android:inputType="textLongMessage"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressT" />
+                app:layout_constraintTop_toBottomOf="@+id/upAddress" />
 
             <TextView
-                android:id="@+id/addressExt"
+                android:id="@+id/upAddressExt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
-                android:text="Address (extension)"
+                android:text="Address (Extension)"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressvalue" />
+                app:layout_constraintTop_toBottomOf="@+id/upAddressvalue" />
 
             <EditText
-                android:id="@+id/addressextvalue"
+                android:id="@+id/upAddressExtvalue"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
-                android:hint="address (Extension)"
+                android:hint="Address (Extension)"
                 android:inputType="textLongMessage"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressExt" />
+                app:layout_constraintTop_toBottomOf="@+id/upAddressExt" />
+
+            <TextView
+                android:id="@+id/upDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Display Name"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/upAddressExtvalue" />
+
+            <EditText
+                android:id="@+id/upDisplayValue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:hint="Display Name"
+                android:inputType="textLongMessage"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/upDisplay" />
+
+            <TextView
+                android:id="@+id/upPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Phone"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/upDisplayValue" />
+
+            <EditText
+                android:id="@+id/upPhoneValue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:hint="0888888888"
+                android:inputType="number"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/upPhone" />
+
+            <TextView
+                android:id="@+id/upEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Email"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/upPhoneValue" />
+
+            <EditText
+                android:id="@+id/upEmailValue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:hint="abc@example.com"
+                android:inputType="textLongMessage"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/upEmail" />
 
             <Button
-                android:id="@+id/usrDBSendBtn"
+                android:id="@+id/usrUpdateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
-                android:text="Send"
+                android:text="Update"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressextvalue" />
+                app:layout_constraintTop_toBottomOf="@+id/upEmailValue" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

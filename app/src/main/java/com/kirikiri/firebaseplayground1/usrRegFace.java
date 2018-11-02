@@ -139,6 +139,7 @@ public class usrRegFace extends AppCompatActivity implements View.OnClickListene
                                         DocumentSnapshot document = task.getResult();
                                         if (!document.exists()) {
                                             Map<String, Object> userDB = new HashMap<>();
+//                                            userDB.put("Fname", user.getDisplayName().substring(0, user.getDisplayName().indexOf(" ")));
                                             db.collection("users").document(user.getEmail())
                                                     .set(userDB)
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {

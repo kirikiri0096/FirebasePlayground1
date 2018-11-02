@@ -9,6 +9,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class usrGetP extends AppCompatActivity implements View.OnClickListener {
 
+    //To-Do
+    //This page will fetch and upload user's profile picture into storage
     @Override
     public void onPause() {
         super.onPause();

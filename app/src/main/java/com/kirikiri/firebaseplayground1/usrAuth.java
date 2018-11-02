@@ -29,6 +29,7 @@ import java.util.Map;
 
 public class usrAuth extends AppCompatActivity implements View.OnClickListener{
 
+    //Initial firebase's Authentication
     private FirebaseAuth mAuth;
     private static final String TAG = "DocSnippets";
     //Variables below will get value from textbox on screen
@@ -77,17 +78,20 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
     }
 
     private void updateUI(@Nullable FirebaseUser currentUser) {
+        //If login
         if (currentUser != null) {
+            //Start fetch content from firestore
+            //Initial database instance
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+            //locate user's document
             DocumentReference docRef = db.collection("users").document(currentUser.getEmail());
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        Toast.makeText(usrAuth.this, "Document Get",
-                                Toast.LENGTH_SHORT).show();
                         if (document.exists()) {
+                            //if document of current user is valid get data
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                             userFName.setText("Fname: " + document.getString("Fname"));
                             userLName.setText("Lname: " + document.getString("Lname"));
@@ -96,20 +100,20 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
                             userAddressExt.setText("address_ext: " + document.getString("address_ext"));
                         } else {
                             Log.d(TAG, "No such document");
-                            Toast.makeText(usrAuth.this, "No such document",
-                                    Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Log.d(TAG, "get failed with ", task.getException());
                     }
                 }
             });
+            //End fetch content from Firestore
+            //Start fetch content from Authentication system
             userUID.setText("UID: " + currentUser.getUid());
             userPhone.setText("Phone: " + currentUser.getPhoneNumber());
             userEmail.setText("Email: " + currentUser.getEmail());
             userPro.setText("Pro: " + currentUser.getProviderId());
             userName.setText("DisplayName: " + currentUser.getDisplayName());
-//        userURL.setText(currentUser.getPhotoUrl().toString());
+//            userURL.setText("DisplayName: " + currentUser.getPhotoUrl().toString());
         }
         else {
             userUID.setText("UID: Signed Out");
@@ -165,6 +169,7 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.authGo:
+                //Check if username of password is invalid
                 String user = usr.getText().toString();
                 String pass2 = pass.getText().toString();
                 if(!TextUtils.isEmpty(user) && !TextUtils.isEmpty(pass2))

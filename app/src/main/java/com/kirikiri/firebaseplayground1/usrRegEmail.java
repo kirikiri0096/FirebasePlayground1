@@ -19,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -26,9 +27,13 @@ import java.util.Map;
 
 public class usrRegEmail extends AppCompatActivity implements View.OnClickListener {
 
+    //this page is user's registration with E-mail without any other information
+
+    //Initial firebase and data
     private FirebaseAuth mAuth;
     private static final String TAG = "DocSnippets";
     private Map<String, Object> userDB = new HashMap<>();
+
     private TextView usr,pass, userUID, userPhone, userEmail, userPro, userName, userURL;
     private Button go;
 
@@ -42,7 +47,6 @@ public class usrRegEmail extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.usr_reg_email);
-
 
         mAuth = FirebaseAuth.getInstance();
         usr = (EditText) findViewById(R.id.insEmailValue2);
@@ -83,10 +87,37 @@ public class usrRegEmail extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        createAccount(usr.getText().toString(),pass.getText().toString());
+        checkAccount(usr.getText().toString(),pass.getText().toString());
+    }
+
+    private void checkAccount (final String email, final String password) {
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("users").document(email);
+        Task<DocumentSnapshot> documentSnapshotTask = docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        //if document of user is valid get data
+                        Log.d(TAG, "createUserWithEmail:Email hae been used");
+                        Toast.makeText(usrRegEmail.this, "This email has been use",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+                        Log.d(TAG, "No such document");
+                        createAccount(email, password);
+                    }
+                }
+            }
+        });
+
+
     }
 
     private void createAccount (String email, String password) {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -99,7 +130,6 @@ public class usrRegEmail extends AppCompatActivity implements View.OnClickListen
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
 
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
                             db.collection("users").document(user.getEmail())
                                     .set(userDB)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -120,10 +150,9 @@ public class usrRegEmail extends AppCompatActivity implements View.OnClickListen
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(usrRegEmail.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
+                            updateUI(null);
                         }
 
-                        // ...
                     }
                 });
     }

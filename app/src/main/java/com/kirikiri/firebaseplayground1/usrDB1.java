@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,13 +37,15 @@ import com.google.firebase.firestore.Source;
 import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
 
-//This class will show hot io import user's data into the database
+//This page will only create new data to DB
 
 public class usrDB1 extends AppCompatActivity implements View.OnClickListener{
 
-    Map<String, Object> users = new HashMap<>();
-    EditText fNameV, lNameV, ssoV, emailsV, phonesV, addressV, address_extV;
-    Button btn;
+
+    private Map<String, Object> users = new HashMap<>();
+    //Variables below will get user's information from Firebase's Firestore
+    private TextView userFName, userLName, userSSO, userAddress, userAddressExt;
+    private Button sentBtn;
     private static final String TAG = "DocSnippets";
 
     @Override
@@ -57,29 +60,29 @@ public class usrDB1 extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.usr_db);
 
         //Getting elements on activity
-        fNameV = (EditText) findViewById(R.id.fnamevalue);
-        lNameV = (EditText) findViewById(R.id.lnamevalue);
-        ssoV = (EditText) findViewById(R.id.ssovalue);
-        phonesV = (EditText) findViewById(R.id.phonevalue);
-        addressV = (EditText) findViewById(R.id.addressvalue);
-        address_extV = (EditText) findViewById(R.id.addressextvalue);
-        btn = (Button) findViewById(R.id.usrDBSendBtn);
-//        btn.setOnClickListener(this);
+        userFName = (EditText) findViewById(R.id.fnamevalue);
+        userLName = (EditText) findViewById(R.id.lnamevalue);
+        userSSO = (EditText) findViewById(R.id.ssovalue);
+        userAddress = (EditText) findViewById(R.id.addressvalue);
+        userAddressExt = (EditText) findViewById(R.id.addressextvalue);
+        sentBtn = (Button) findViewById(R.id.usrDBSendBtn);
+        sentBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
+        //Initial database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         //Getting data into Map
-        users.put("Fname", fNameV.getText().toString());
-        users.put("Lname", lNameV.getText().toString());
-        users.put("SSO", ssoV.getText().toString());
-        users.put("phone", phonesV.getText().toString());
-        users.put("address", addressV.getText().toString());
-        users.put("address_ext", address_extV.getText().toString());
+        users.put("Fname", userFName.getText().toString());
+        users.put("Lname", userLName.getText().toString());
+        users.put("SSO", userSSO.getText().toString());
+        users.put("address", userAddress.getText().toString());
+        users.put("address_ext", userAddressExt.getText().toString());
 
 
+        //Put data into Firestore with random document name
         db.collection("users")
                 .add(users)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

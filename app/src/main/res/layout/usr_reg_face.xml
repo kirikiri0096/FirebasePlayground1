@@ -22,13 +22,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/userName4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/userPhone4"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:id="@+id/userName4"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginLeft="16dp"
+    app:layout_constraintBottom_toTopOf="@+id/userPhone4"
+    app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/userPhone4"
@@ -75,4 +75,18 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/faceOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="147dp"
+        android:layout_marginLeft="147dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="149dp"
+        android:layout_marginRight="149dp"
+        android:text="Logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/faceSign" />
 </android.support.constraint.ConstraintLayout>

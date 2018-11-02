@@ -105,20 +105,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ssovalue" />
 
-            <EditText
-                android:id="@+id/phonevalue"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:hint="0888888888"
-                android:inputType="phone"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneN" />
-
             <TextView
                 android:id="@+id/addressT"
                 android:layout_width="wrap_content"
@@ -128,7 +114,7 @@
                 android:text="Address"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phonevalue" />
+                app:layout_constraintTop_toBottomOf="@+id/phoneN" />
 
             <EditText
                 android:id="@+id/addressvalue"
@@ -177,7 +163,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:ems="10"
-                android:onClick="onClick"
                 android:text="Send"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"

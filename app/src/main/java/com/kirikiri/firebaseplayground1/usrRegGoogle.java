@@ -3,6 +3,7 @@ package com.kirikiri.firebaseplayground1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,20 +17,28 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class usrRegGoogle extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "DocSnippets";
-    TextView usr,pass, userUID, userPhone, userEmail, userPro, userName, userURL;
-    Button gooIn;
+    private TextView usr,pass, userUID, userPhone, userEmail, userPro, userName, userURL;
+    private Button gooIn, gooOut;
 
     @Override
     public void onPause() {
@@ -43,6 +52,8 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.usr_reg_google);
         gooIn = (Button) findViewById(R.id.googleSign);
         gooIn.setOnClickListener(this);
+        gooOut = (Button) findViewById(R.id.googleOut);
+        gooOut.setOnClickListener(this);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -57,6 +68,8 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        updateUI(currentUser);
         // [END initialize_auth]
 
         userUID = (TextView) findViewById(R.id.userUID3);
@@ -74,7 +87,9 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
             case R.id.googleSign:
                 signIn();
                 break;
-            // ...
+            case R.id.googleOut:
+                signOutG();
+                break;
         }
     }
 
@@ -96,7 +111,7 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
                 // [START_EXCLUDE]
-//                updateUI(null);
+                updateUI(null);
                 // [END_EXCLUDE]
             }
         }
@@ -113,14 +128,15 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            Toast.makeText(usrRegGoogle.this, "Authentication Sucess.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(usrRegGoogle.this, "Authentication Success.", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+                            checkAccount(user.getEmail());
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(usrRegGoogle.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
+                            updateUI(null);
                         }
 
                     }
@@ -130,47 +146,67 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
     }
 
-    public void signOutG(View v) {
+    private void signOutG() {
         // Firebase sign out
         mAuth.signOut();
-
         // Google sign out
         mGoogleSignInClient.signOut().addOnCompleteListener(this,
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(usrRegGoogle.this, "Logged out.", Toast.LENGTH_SHORT).show();
-//                        updateUI(null);
+                        updateUI(null);
                     }
                 });
     }
 
-//    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-//        try {
-//            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-//            Toast.makeText(usrRegGoogle.this, "Authentication success.",
-//                    Toast.LENGTH_SHORT).show();
-//
-//            // Signed in successfully, show authenticated UI.
-//            updateUI(account);
-//        } catch (ApiException e) {
-//            // The ApiException status code indicates the detailed failure reason.
-//            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-//            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-//            Toast.makeText(usrRegGoogle.this, "Authentication failed.",
-//                    Toast.LENGTH_SHORT).show();
-////            updateUI(null);
-//        }
-//    }
+    private void checkAccount(final String email) {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("users").document(email);
+        com.google.android.gms.tasks.Task<DocumentSnapshot> documentSnapshotTask = docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (!document.exists()) {
+                        Map<String, Object> userDB = new HashMap<>();
+                        db.collection("users").document(email)
+                                .set(userDB)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
+                    }
+                }
+            }
+        });
+    }
 
-    private void updateUI(FirebaseUser currentUser) {
-        userUID.setText("UID: " + currentUser.getUid());
-        userPhone.setText("Phone: " + currentUser.getPhoneNumber());
-        userEmail.setText("Email: " + currentUser.getEmail());
-        userPro.setText("Pro: " + currentUser.getProviderId());
-        userName.setText("DisplayName: " + currentUser.getDisplayName());
+
+    private void updateUI(@Nullable FirebaseUser currentUser) {
+        if (currentUser != null) {
+            userUID.setText("UID: " + currentUser.getUid());
+            userPhone.setText("Phone: " + currentUser.getPhoneNumber());
+            userEmail.setText("Email: " + currentUser.getEmail());
+            userPro.setText("Pro: " + currentUser.getProviderId());
+            userName.setText("DisplayName: " + currentUser.getDisplayName());
+        }
+        else {
+            userUID.setText("UID: Signed Out");
+            userPhone.setText("Phone: Signed Out");
+            userEmail.setText("Email: Signed Out");
+            userPro.setText("Pro: Signed Out");
+            userName.setText("DisplayName: Signed Out");
+        }
     }
 }

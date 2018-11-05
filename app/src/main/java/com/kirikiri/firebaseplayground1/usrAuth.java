@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -113,7 +114,25 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
             userEmail.setText("Email: " + currentUser.getEmail());
             userPro.setText("Pro: " + currentUser.getProviderId());
             userName.setText("DisplayName: " + currentUser.getDisplayName());
-//            userURL.setText("DisplayName: " + currentUser.getPhotoUrl().toString());
+            userURL.setText("ProfileURL: " + currentUser.getPhotoUrl().toString());
+            for (UserInfo profile : currentUser.getProviderData()) {
+                // Id of the provider (ex: google.com)
+                String providerId = profile.getProviderId();
+
+                // UID specific to the provider
+                String uid = profile.getUid();
+
+                // Name, email address, and profile photo Url
+                String name = profile.getDisplayName();
+                String email = profile.getEmail();
+                Uri photoUrl = profile.getPhotoUrl();
+
+                Log.d(TAG, "ProviderID: " + providerId);
+                Log.d(TAG, "ProviderUID: " + uid);
+                Log.d(TAG, "ProviderDisplayName: " + name);
+                Log.d(TAG, "ProviderEmail: " + email);
+                Log.d(TAG, "ProviderPhotoURL: " + photoUrl.toString());
+            }
         }
         else {
             userUID.setText("UID: Signed Out");

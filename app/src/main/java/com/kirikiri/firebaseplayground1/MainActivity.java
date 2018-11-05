@@ -9,7 +9,7 @@ import android.widget.RadioButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     
-    private RadioButton usrDB, usrAuth, usrRegEmail, usrRegGoo, usrRegFace, sysEtc, usrPictureUpload, usrUpdateProf;
+    private RadioButton usrDB, usrAuth, usrRegEmail, usrRegGoo, usrRegFace, sysEtc, usrPictureUpload, usrUpdateProf, usrGetProf, supGloLst, usrMakeOrder;
     private Button goBtn;
 
     @Override
@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sysEtc = (RadioButton) findViewById(R.id.etcBut);
         usrPictureUpload = (RadioButton) findViewById(R.id.usrPictureUpload);
         usrUpdateProf = (RadioButton) findViewById(R.id.usrUpdateProf);
+        usrGetProf = (RadioButton) findViewById(R.id.usrGetProf);
+        supGloLst = (RadioButton) findViewById(R.id.supGloLst);
+        usrMakeOrder = (RadioButton) findViewById(R.id.usrMakeOrder);
         
         goBtn = (Button) findViewById(R.id.startDebugButt);
         goBtn.setOnClickListener(this);
@@ -56,8 +59,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(usrPictureUpload.isChecked()) {
             intent = new Intent(this, usrStorage.class);
         }
+        if(usrGetProf.isChecked()) {
+            intent = new Intent(this, usrGetP.class);
+        }
         if(usrUpdateProf.isChecked()) {
             intent = new Intent(this, usrUpdate.class);
+        }
+        if(supGloLst.isChecked()) {
+            intent = new Intent(this, orderListG.class);
+        }
+        if(usrMakeOrder.isChecked()) {
+            intent = new Intent(this, usrMakeOrder.class);
         }
         switch (v.getId()) {
             case R.id.startDebugButt:

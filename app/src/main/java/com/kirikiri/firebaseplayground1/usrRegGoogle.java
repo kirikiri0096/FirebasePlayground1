@@ -33,6 +33,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class usrRegGoogle extends AppCompatActivity implements View.OnClickListener {
+
+    //TODO get user's picture from account
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
@@ -129,8 +131,39 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             Toast.makeText(usrRegGoogle.this, "Authentication Success.", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            checkAccount(user.getEmail());
+                            final FirebaseUser user = mAuth.getCurrentUser();
+                            final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            DocumentReference docRef = db.collection("users").document(user.getEmail());
+                            com.google.android.gms.tasks.Task<DocumentSnapshot> documentSnapshotTask = docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (!document.exists()) {
+                                            Map<String, Object> userDB = new HashMap<>();
+                                            userDB.put("Fname", user.getDisplayName().substring(0, user.getDisplayName().indexOf(" ")));
+                                            userDB.put("Lname", user.getDisplayName().substring(user.getDisplayName().indexOf(" ")+1, user.getDisplayName().length()));
+                                            //TODO change user's profile image size to 500x500
+//                                            GoogleSignInAccount abc = GoogleSignIn.getLastSignedInAccount();
+                                            db.collection("users").document(user.getEmail())
+                                                    .set(userDB)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w(TAG, "Error adding document", e);
+                                                        }
+                                                    });
+                                        }
+
+                                    }
+                                }
+                            });
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -160,36 +193,6 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
                         updateUI(null);
                     }
                 });
-    }
-
-    private void checkAccount(final String email) {
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("users").document(email);
-        com.google.android.gms.tasks.Task<DocumentSnapshot> documentSnapshotTask = docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (!document.exists()) {
-                        Map<String, Object> userDB = new HashMap<>();
-                        db.collection("users").document(email)
-                                .set(userDB)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error adding document", e);
-                                    }
-                                });
-                    }
-                }
-            }
-        });
     }
 
 

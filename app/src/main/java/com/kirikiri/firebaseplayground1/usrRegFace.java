@@ -1,6 +1,7 @@
 package com.kirikiri.firebaseplayground1;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -139,7 +141,8 @@ public class usrRegFace extends AppCompatActivity implements View.OnClickListene
                                         DocumentSnapshot document = task.getResult();
                                         if (!document.exists()) {
                                             Map<String, Object> userDB = new HashMap<>();
-//                                            userDB.put("Fname", user.getDisplayName().substring(0, user.getDisplayName().indexOf(" ")));
+                                            userDB.put("Fname", user.getDisplayName().substring(0, user.getDisplayName().indexOf(" ")));
+                                            userDB.put("Lname", user.getDisplayName().substring(user.getDisplayName().indexOf(" ")+1, user.getDisplayName().length()));
                                             db.collection("users").document(user.getEmail())
                                                     .set(userDB)
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -154,6 +157,11 @@ public class usrRegFace extends AppCompatActivity implements View.OnClickListene
                                                             Log.w(TAG, "Error adding document", e);
                                                         }
                                                     });
+                                            String profURL2 = user.getPhotoUrl().toString();
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setPhotoUri(Uri.parse(profURL2 + "?type=large&width=500&height=500"))
+                                                    .build();
+                                            user.updateProfile(profileUpdates);
                                         }
                                     }
                                 }
@@ -183,23 +191,7 @@ public class usrRegFace extends AppCompatActivity implements View.OnClickListene
             userEmail.setText("Email: " + currentUser.getEmail());
             userPro.setText("Pro: " + currentUser.getProviderId());
             userName.setText("DisplayName: " + currentUser.getDisplayName());
-
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            Map<String, Object> userDB = new HashMap<>();
-            db.collection("users").document(currentUser.getEmail())
-                    .set(userDB)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error adding document", e);
-                        }
-                    });
+            userURL.setText("URL: " + currentUser.getPhotoUrl().toString());
         }
         else {
             userUID.setText("UID: Signed Out");

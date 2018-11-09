@@ -9,7 +9,7 @@ import android.widget.RadioButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     
-    private RadioButton usrDB, usrAuth, usrRegEmail, usrRegGoo, usrRegFace, sysEtc, usrPictureUpload, usrUpdateProf, usrGetProf, supGloLst, usrMakeOrder;
+    private RadioButton usrDB, usrAuth, usrRegEmail, usrRegGoo, usrRegFace, sysEtc, usrPictureUpload, usrUpdateProf, usrGetProf, supGloLst, usrMakeOrder, supLst;
     private Button goBtn;
 
     @Override
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         usrGetProf = (RadioButton) findViewById(R.id.usrGetProf);
         supGloLst = (RadioButton) findViewById(R.id.supGloLst);
         usrMakeOrder = (RadioButton) findViewById(R.id.usrMakeOrder);
+        supLst = (RadioButton) findViewById(R.id.supLst);
         
         goBtn = (Button) findViewById(R.id.startDebugButt);
         goBtn.setOnClickListener(this);
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(usrMakeOrder.isChecked()) {
             intent = new Intent(this, usrMakeOrder.class);
+        }
+        if(supLst.isChecked()) {
+            intent = new Intent(this, supOrderList.class);
         }
         switch (v.getId()) {
             case R.id.startDebugButt:

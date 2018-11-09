@@ -1,32 +1,26 @@
 package com.kirikiri.firebaseplayground1;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-//TODO Show all order lists from firestore to View
-
-public class orderListG extends AppCompatActivity {
+public class supOrderList extends AppCompatActivity {
 
     private FirebaseUser currentUser;
     private FirebaseFirestore db;
-    private static final String TAG = "SupGloList";
+    private static final String TAG = "SupIndividualList";
 
     @Override
     public void onPause() {
@@ -39,17 +33,16 @@ public class orderListG extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
-            Toast.makeText(orderListG.this, "Please login before use this activity",
+            Toast.makeText(supOrderList.this, "Please login before use this activity",
                     Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
-        setContentView(R.layout.sup_global_list);
+        setContentView(R.layout.sup_order_list);
+
         db = FirebaseFirestore.getInstance();
-
-
-        Query globalList = db.collection("orders").whereEqualTo("supEmail", null);
-        globalList.get()
+        Query myList = db.collection("orders").whereEqualTo("supEmail", currentUser.getEmail());
+        myList.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -65,6 +58,5 @@ public class orderListG extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 }

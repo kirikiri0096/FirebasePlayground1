@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class usrStorage extends AppCompatActivity implements View.OnClickListener {
 
+    //TODO upload user's picture into storage
+
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
 

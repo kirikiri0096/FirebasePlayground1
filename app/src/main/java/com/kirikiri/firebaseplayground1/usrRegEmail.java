@@ -31,7 +31,7 @@ public class usrRegEmail extends AppCompatActivity implements View.OnClickListen
 
     //Initial firebase and data
     private FirebaseAuth mAuth;
-    private static final String TAG = "DocSnippets";
+    private static final String TAG = "regEmail";
     private Map<String, Object> userDB = new HashMap<>();
 
     private TextView usr,pass, userUID, userPhone, userEmail, userPro, userName, userURL;

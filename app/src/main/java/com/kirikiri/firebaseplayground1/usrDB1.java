@@ -44,9 +44,9 @@ public class usrDB1 extends AppCompatActivity implements View.OnClickListener{
 
     private Map<String, Object> users = new HashMap<>();
     //Variables below will get user's information from Firebase's Firestore
-    private TextView userFName, userLName, userSSO, userAddress, userAddressExt;
+    private TextView userFName, userLName, userSSO, userAddress, userAddressExt, phonevalue;
     private Button sentBtn;
-    private static final String TAG = "DocSnippets";
+    private static final String TAG = "usrDB";
 
     @Override
     public void onPause() {
@@ -65,6 +65,7 @@ public class usrDB1 extends AppCompatActivity implements View.OnClickListener{
         userSSO = (EditText) findViewById(R.id.ssovalue);
         userAddress = (EditText) findViewById(R.id.addressvalue);
         userAddressExt = (EditText) findViewById(R.id.addressextvalue);
+        phonevalue = (EditText) findViewById(R.id.phonevalue);
         sentBtn = (Button) findViewById(R.id.usrDBSendBtn);
         sentBtn.setOnClickListener(this);
     }
@@ -80,6 +81,7 @@ public class usrDB1 extends AppCompatActivity implements View.OnClickListener{
         users.put("SSO", userSSO.getText().toString());
         users.put("address", userAddress.getText().toString());
         users.put("address_ext", userAddressExt.getText().toString());
+        users.put("phone", phonevalue.getText().toString());
 
 
         //Put data into Firestore with random document name

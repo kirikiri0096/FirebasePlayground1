@@ -38,7 +38,7 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
-    private static final String TAG = "DocSnippets";
+    private static final String TAG = "regGoo";
     private TextView usr,pass, userUID, userPhone, userEmail, userPro, userName, userURL;
     private Button gooIn, gooOut;
 

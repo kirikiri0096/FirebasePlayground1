@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kirikiri.firebaseplayground1">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <meta-data
+        android:name="com.facebook.sdk.ApplicationId"
+        android:value="@string/facebook_app_id" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,47 +15,43 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".usrDB1"></activity>
-        <activity android:name=".usrAuth"></activity>
-        <activity android:name=".usrRegEmail"></activity>
-        <activity android:name=".usrRegFace"></activity>
-        <activity android:name=".usrRegGoogle"></activity>
-        <activity android:name=".testActivity"></activity>
-        <activity android:name=".usrGetP"></activity>
-        <activity android:name=".usrStorage"></activity>
-        <activity android:name=".usrUpdate"></activity>
-        <activity android:name=".orderListG"></activity>
-        <activity android:name=".usrMakeOrder"></activity>
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity android:name=".usrDB1" />
+        <activity android:name=".usrAuth" />
+        <activity android:name=".usrRegEmail" />
+        <activity android:name=".usrRegFace" />
+        <activity android:name=".usrRegGoogle" />
+        <activity android:name=".testActivity" />
+        <activity android:name=".usrGetP" />
+        <activity android:name=".usrStorage" />
+        <activity android:name=".usrUpdate" />
+        <activity android:name=".orderListG" />
+        <activity android:name=".usrMakeOrder" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".supOrderList"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <meta-data android:name="com.facebook.sdk.ApplicationId"
-        android:value="@string/facebook_app_id"/>
-
-
-
 
 </manifest>

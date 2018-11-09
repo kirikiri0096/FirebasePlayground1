@@ -25,10 +25,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO create order request by user
-//Instruction: get order count from db to create document ID
-//Note: document id format: [xxxxxx]-> x is positive integer
-
 public class usrMakeOrder extends AppCompatActivity {
 
     private Map<String, Object> userOrders = new HashMap<>();
@@ -75,6 +71,8 @@ public class usrMakeOrder extends AppCompatActivity {
                     userOrders.put("usrEmail", currentUser.getEmail());
                     userOrders.put("prodName", prodName);
                     userOrders.put("address", address);
+                    userOrders.put("stat", 0);
+                    userOrders.put("supEmail", null);
                     if(!TextUtils.isEmpty(descrip))
                         userOrders.put("description", descrip);
 

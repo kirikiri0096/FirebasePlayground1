@@ -32,7 +32,7 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
 
     //Initial firebase's Authentication
     private FirebaseAuth mAuth;
-    private static final String TAG = "DocSnippets";
+    private static final String TAG = "usrAuth";
     //Variables below will get value from textbox on screen
     private TextView usr,pass;
     //Variables below will get user's information from Firebase's Authentication
@@ -96,6 +96,7 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                             userFName.setText("Fname: " + document.getString("Fname"));
                             userLName.setText("Lname: " + document.getString("Lname"));
+                            userPhone.setText("Lname: " + document.getString("phone"));
                             userSSO.setText("SSO: " + document.getString("SSO"));
                             userAddress.setText("address: " + document.getString("address"));
                             userAddressExt.setText("address_ext: " + document.getString("address_ext"));
@@ -110,7 +111,6 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
             //End fetch content from Firestore
             //Start fetch content from Authentication system
             userUID.setText("UID: " + currentUser.getUid());
-            userPhone.setText("Phone: " + currentUser.getPhoneNumber());
             userEmail.setText("Email: " + currentUser.getEmail());
             userPro.setText("Pro: " + currentUser.getProviderId());
             userName.setText("DisplayName: " + currentUser.getDisplayName());

@@ -114,7 +114,7 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
             userEmail.setText("Email: " + currentUser.getEmail());
             userPro.setText("Pro: " + currentUser.getProviderId());
             userName.setText("DisplayName: " + currentUser.getDisplayName());
-            userURL.setText("ProfileURL: " + currentUser.getPhotoUrl().toString());
+//            userURL.setText("ProfileURL: " + currentUser.getPhotoUrl().toString());
             for (UserInfo profile : currentUser.getProviderData()) {
                 // Id of the provider (ex: google.com)
                 String providerId = profile.getProviderId();
@@ -131,7 +131,7 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
                 Log.d(TAG, "ProviderUID: " + uid);
                 Log.d(TAG, "ProviderDisplayName: " + name);
                 Log.d(TAG, "ProviderEmail: " + email);
-                Log.d(TAG, "ProviderPhotoURL: " + photoUrl.toString());
+//                Log.d(TAG, "ProviderPhotoURL: " + photoUrl.toString());
             }
         }
         else {

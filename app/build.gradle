@@ -36,6 +36,12 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:[4,5)'
     //implementation 'com.google.android.gms.tasks.Task'
 
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:1.13.1'
+    // for experimental rx picker
+    implementation 'com.github.esafirm.android-image-picker:rximagepicker:1.13.1'
+    // If you have a problem with Glide, please use the same Glide version or simply open an issue
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

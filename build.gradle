@@ -22,6 +22,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        //esafirm's android-image-picker
+        //Source: https://github.com/esafirm/android-image-picker
+        maven { url "https://jitpack.io" }
     }
 }
 

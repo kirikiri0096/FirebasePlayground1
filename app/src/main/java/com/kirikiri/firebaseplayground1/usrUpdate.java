@@ -169,17 +169,18 @@ public class usrUpdate extends AppCompatActivity implements View.OnClickListener
 //                }
 
                 //TODO Edit Email data and database document name
-//                if(!email1.isEmpty()) {
-//                    currentUser.updateEmail(email1)
-//                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<Void> task) {
-//                                    if (task.isSuccessful()) {
-//                                        Log.d(TAG, "User email address updated.");
-//                                    }
-//                                }
-//                            });
-//                }
+                if(!email1.isEmpty()) {
+                    currentUser.updateEmail(email1)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "User email address updated.");
+                                    }
+                                }
+                            });
+                }
         }
     }
 

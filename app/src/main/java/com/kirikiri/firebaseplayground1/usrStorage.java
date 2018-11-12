@@ -2,13 +2,17 @@ package com.kirikiri.firebaseplayground1;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +26,16 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class usrStorage extends AppCompatActivity {
-
     //TODO upload user's picture into storage
 
     private FirebaseAuth mAuth;
@@ -35,8 +43,11 @@ public class usrStorage extends AppCompatActivity {
 
     private Button picChooseBtn, picUploadBtn;
     private TextView usrName, usrEmail;
-    private ArrayList<Image> images = new ArrayList<>();
+//    private ArrayList<Image> images = new ArrayList<>();
     private static final String TAG = "usrStorage";
+    private ImageView selectpic;
+    private Uri mSelectedImageUri;
+    private List<Image> images;
 
     @Override
     public void onPause() {
@@ -67,27 +78,41 @@ public class usrStorage extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                captureImage();
+                Log.i(TAG, "OnClick");
+                ImagePicker.create(usrStorage.this)
+                        .limit(6)
+                        .start();
             }
         });
         picUploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage();
+                Log.i(TAG, "OnClick");
+//                uploadImage();
             }
         });
     }
 
-    private void captureImage() {
-        ImagePicker.create(this).limit(6).start();
-    }
-
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
-        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-            images = (ArrayList<Image>) ImagePicker.getImages(data);
+        Log.i(TAG, "onActivityResult");
+        images = ImagePicker.getImages(data);
+
+        Uri selectedImageUri;
+
+        if (images != null && !images.isEmpty()) {
+
+
+//        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+////            images = (ArrayList<Image>) ImagePicker.getImages(data);
+////            printImages(images);
+////            Log.d(TAG, "Selected picture");
+//            return;
+//        }
+
             printImages(images);
-            return;
+            uploadImage(images);
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -98,53 +123,58 @@ public class usrStorage extends AppCompatActivity {
         StringBuilder stringBuffer = new StringBuilder();
         for (int i = 0, l = images.size(); i < l; i++) {
             stringBuffer.append(images.get(i).getPath()).append("\n");
-            Log.d(TAG, Uri.parse(images.get(i).getPath()).toString());
+            Log.i(TAG, images.get(i).getPath());
         }
 //        textView.setText(stringBuffer.toString());
     }
 
-    private void uploadImage() {
+    private void uploadImage(List<Image> images) {
 
         if(images != null)
         {
-//            final ProgressDialog progressDialog = new ProgressDialog(this);
-//            progressDialog.setTitle("Uploading...");
-//            progressDialog.show();
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
 
-//            FirebaseStorage storage = FirebaseStorage.getInstance();
-//            StorageReference storageReference = storage.getReference();
-//            StorageReference ref = storageReference.child("images/");
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference();
+            // [START upload_file]
+//            Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
+
 
             for(Image i:images) {
-//                ref.putFile(Uri.parse(i.getPath()))
-//                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                            @Override
-//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                progressDialog.dismiss();
-//                                Toast.makeText(usrStorage.this, "Uploaded", Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        .addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                progressDialog.dismiss();
-//                                Toast.makeText(usrStorage.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                            @Override
-//                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                                double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-//                                        .getTotalByteCount());
-//                                progressDialog.setMessage("Uploaded "+(int)progress+"%");
-//                            }
-//                        });
-//                Log.d(TAG, Uri.parse(i.getPath()).toString());
+                Log.i(TAG, "foreach loop" +i.getPath());
+                StorageReference ref = storageReference.child("images/"+Uri.parse(i.getPath()).getLastPathSegment());
+                ref.putFile(Uri.fromFile(new File(i.getPath())))
+
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                progressDialog.dismiss();
+                                Toast.makeText(usrStorage.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(usrStorage.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                        .getTotalByteCount());
+                                progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            }
+                        });
+                Log.d(TAG, Uri.parse(i.getPath()).toString());
             }
 
 
         }
     }
 
-
 }
+

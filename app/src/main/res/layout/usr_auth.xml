@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/insPassValue" />
 
     <TextView
-        android:id="@+id/authUserName"
+        android:id="@+id/stUsrName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -90,10 +90,10 @@
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authUserName" />
+        app:layout_constraintTop_toBottomOf="@+id/stUsrName" />
 
     <TextView
-        android:id="@+id/authUserEmail"
+        android:id="@+id/stUsrEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -108,7 +108,7 @@
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authUserEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/stUsrEmail" />
 
     <TextView
         android:id="@+id/authUserUID"

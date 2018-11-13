@@ -44,8 +44,8 @@ public class usrGetP extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.usr_get_prof);
 
+        setContentView(R.layout.usr_get_prof);
         userUID = (TextView) findViewById(R.id.userUID5);
         userPhone = (TextView) findViewById(R.id.userPhone5);
         userEmail = (TextView) findViewById(R.id.userEmail5);

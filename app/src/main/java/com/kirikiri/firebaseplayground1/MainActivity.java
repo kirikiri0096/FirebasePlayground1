@@ -11,7 +11,7 @@ import android.widget.RadioButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     
-    private RadioButton usrDB, usrAuth, usrRegEmail, usrRegGoo, usrRegFace, sysEtc, usrPictureUpload, usrUpdateProf, usrGetProf, supGloLst, usrMakeOrder, supLst;
+    private RadioButton usrDB, usrAuth, usrRegEmail, usrRegGoo, usrRegFace, sysEtc, usrPictureUpload, usrUpdateProf, usrGetProf, supGloLst, usrMakeOrder, supLst, usrPictureDownload;
     private Button goBtn;
     private Button btnChoose, btnUpload;
     private ImageView imageView;
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         supGloLst = (RadioButton) findViewById(R.id.supGloLst);
         usrMakeOrder = (RadioButton) findViewById(R.id.usrMakeOrder);
         supLst = (RadioButton) findViewById(R.id.supLst);
+        usrPictureDownload = (RadioButton) findViewById(R.id.usrPictureDownload);
         
         goBtn = (Button) findViewById(R.id.startDebugButt);
         goBtn.setOnClickListener(this);
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(usrPictureUpload.isChecked()) {
             intent = new Intent(this, usrStorage.class);
+        }
+        if(usrPictureDownload.isChecked()) {
+            intent = new Intent(this, usrStorageUp.class);
         }
         if(usrGetProf.isChecked()) {
             intent = new Intent(this, usrGetP.class);

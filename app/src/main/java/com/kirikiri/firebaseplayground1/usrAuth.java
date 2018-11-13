@@ -23,10 +23,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.sql.Struct;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class usrAuth extends AppCompatActivity implements View.OnClickListener{
 
@@ -58,9 +54,9 @@ public class usrAuth extends AppCompatActivity implements View.OnClickListener{
         pass = (EditText) findViewById(R.id.insPassValue);
         userUID = (TextView) findViewById(R.id.authUserUID);
         userPhone = (TextView) findViewById(R.id.authUserPhone);
-        userEmail = (TextView) findViewById(R.id.authUserEmail);
+        userEmail = (TextView) findViewById(R.id.stUsrEmail);
         userPro = (TextView) findViewById(R.id.authUserPro);
-        userName = (TextView) findViewById(R.id.authUserName);
+        userName = (TextView) findViewById(R.id.stUsrName);
         userURL = (TextView) findViewById(R.id.authUserURL);
         userFName = (TextView) findViewById(R.id.authUserFName);
         userLName = (TextView) findViewById(R.id.authUserLName);

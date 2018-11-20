@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,6 +42,7 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "regGoo";
     private TextView usr,pass, userUID, userPhone, userEmail, userPro, userName, userURL;
     private Button gooIn, gooOut;
+    private SignInButton signInButton;
 
     @Override
     public void onPause() {
@@ -52,8 +54,11 @@ public class usrRegGoogle extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.usr_reg_google);
-        gooIn = (Button) findViewById(R.id.googleSign);
-        gooIn.setOnClickListener(this);
+//        gooIn = (Button) findViewById(R.id.googleSign);
+//        gooIn.setOnClickListener(this);
+        signInButton = (SignInButton) findViewById(R.id.googleSign);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+        signInButton.setOnClickListener(this);
         gooOut = (Button) findViewById(R.id.googleOut);
         gooOut.setOnClickListener(this);
 

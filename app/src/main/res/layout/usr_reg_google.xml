@@ -61,16 +61,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <!--<Button-->
+        <!--android:id="@+id/googleSign"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="147dp"-->
+        <!--android:layout_marginLeft="147dp"-->
+        <!--android:layout_marginTop="94dp"-->
+        <!--android:layout_marginEnd="149dp"-->
+        <!--android:layout_marginRight="149dp"-->
+        <!--android:text="Login"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/googleSign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="147dp"
-        android:layout_marginLeft="147dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginLeft="137dp"
         android:layout_marginTop="94dp"
-        android:layout_marginEnd="149dp"
-        android:layout_marginRight="149dp"
-        android:text="Login"
+        android:layout_marginEnd="136dp"
+        android:layout_marginRight="136dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/googleOut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
